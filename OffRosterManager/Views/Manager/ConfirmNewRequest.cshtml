@@ -1,0 +1,7 @@
+﻿@model  OffRosterRequest
+
+<h1>Request succesfully submitted!</h1>
+<h4>@Model.ThreeLetterCode</h4>
+<h4>@Model.OffRosterCode</h4>
+<h4>@Model.StartDate.ToShortDateString() - @Model.EndDate.GetValueOrDefault().ToShortDateString()</h4>
+<a class="nav-link" asp-controller="Manager" asp-action="ViewAllRequests">View Your Requests</a>

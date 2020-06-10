@@ -1,0 +1,92 @@
+﻿@model List<OffRosterRequest>
+
+@{
+    ViewData["Title"] = "New Requests";
+}
+
+<h2>New Requests</h2>
+<div id="selector">
+    <div class="row">
+        <table class="table col-md 6">
+            <thead>
+                <tr>
+                    <th>
+                        3 Letter Code
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                    <th>
+                        End Date
+                    </th>
+                    <th>
+                        Reason Code
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThreeLetterCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @if (item.IsOpenEnded == false)
+                            {
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            }
+                            else
+                            {
+                                <i>Unknown</i>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OffRosterCode)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-success btn-sm"
+                               asp-controller="Crewing"
+                               asp-action="ConfirmRequest"
+                               asp-route-id="@item.Id">
+                                Approve
+                            </a>
+                            @if (item.Comments.Count > 0)
+                            {
+                                <a class="btn btn-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                   role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                    Comments
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-outline-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                   role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                    Comments
+                                </a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-lg-5 sticky-top">
+            @foreach (var item in Model)
+            {
+                <div class="collapse" id="@("comment" + item.Id)" style="margin-left:20px" data-parent="#selector" .>
+                    <h4>Comments for @item.ThreeLetterCode</h4>
+
+                    @foreach (var comment in item.Comments)
+                    {
+                        <partial name="_CommentCard" model="comment" />
+                    }
+                   <partial name="_AddComment" model="new OffRosterRequestComment {OffRosterRequestId = item.Id }" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

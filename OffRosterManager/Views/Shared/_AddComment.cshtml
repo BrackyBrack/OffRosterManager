@@ -1,0 +1,17 @@
+﻿@model OffRosterRequestComment
+
+    <form asp-controller="Crewing" asp-action="AddComment" method="post">
+        <input asp-for="OffRosterRequestId" value="@Model.OffRosterRequestId" style="visibility:hidden" />
+        <div class="form-group">
+            <label asp-for="Comment" class=" control-label"></label>
+            <div>
+                <textarea asp-for="Comment" class="form-control"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-5">
+                <input type="submit" class="btn btn-primary" value="Add" />
+            </div>
+        </div>
+    </form>

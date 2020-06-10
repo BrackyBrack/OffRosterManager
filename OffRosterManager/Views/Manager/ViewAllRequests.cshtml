@@ -1,0 +1,408 @@
+﻿
+@model OffRosterListViewModel
+
+@{
+    ViewData["Title"] = "View All Requests";
+}
+
+<h2>View Your Requests</h2>
+
+<input id="searchText" type="text" class="form-control col-sm-4" placeholder="Search by 3 Letter code" maxlength="3" onkeyup="search()" style="margin-bottom:5px">
+
+<div id="selector" class="row">
+    <div class="col-sm-7">
+        <div style="margin-bottom: 5px">
+            <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#awaiting" aria-expanded="true" aria-controls="awaiting">
+                Pending Requests <span class="badge badge-pill badge-light" id="awaitingTableCount">@Model.AwaitingRequests.Count</span>
+            </button>
+            <div class="collapse" id="awaiting">
+                <h4>Active Requests</h4>
+                <table class="table" id="awaitingTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                3 Letter Code
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Reason Code
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.AwaitingRequests)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThreeLetterCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OffRosterCode)
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm"
+                                       asp-controller="Manager"
+                                       asp-action="AmendRequest"
+                                       asp-route-requestId="@item.Id">Amend</a>
+                                    @if (item.Comments.Count > 0)
+                                    {
+                                        <a class="btn btn-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#active" aria-expanded="true" aria-controls="active">
+                Active Requests <span class="badge badge-pill badge-light" id="activeTableCount">@Model.ActiveRequests.Count</span>
+            </button>
+            <div class="collapse" id="active">
+                <h4>Active Requests</h4>
+                <table class="table" id="activeTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                3 Letter Code
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Reason Code
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ActiveRequests)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThreeLetterCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OffRosterCode)
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm"
+                                       asp-controller="Manager"
+                                       asp-action="AmendRequest"
+                                       asp-route-requestId="@item.Id">Amend</a>
+                                    @if (item.Comments.Count > 0)
+                                    {
+                                        <a class="btn btn-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#open" aria-expanded="true" aria-controls="open">
+                Open Ended Requests <span class="badge badge-pill badge-light" id="openTableCount">@Model.OpenEndedRequests.Count</span>
+            </button>
+            <div class="collapse" id="open">
+                <h4>Open Ended Requests</h4>
+                <table class="table" id="openTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                3 Letter Code
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Reason Code
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OpenEndedRequests)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThreeLetterCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    Unknown
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OffRosterCode)
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm"
+                                       asp-controller="Manager"
+                                       asp-action="AmendRequest"
+                                       asp-route-requestId="@item.Id">Amend</a>
+                                    @if (item.Comments.Count > 0)
+                                    {
+                                        <a class="btn btn-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#future" aria-expanded="true" aria-controls="future">
+                Future Requests <span class="badge badge-pill badge-light" id="futureTableCount">@Model.FutureRequests.Count</span>
+            </button>
+            <div class="collapse" id="future">
+                <h4> Future Requests</h4>
+                <table class="table" id="futureTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                3 Letter Code
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Reason Code
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.FutureRequests)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThreeLetterCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OffRosterCode)
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm"
+                                       asp-controller="Manager"
+                                       asp-action="AmendRequest"
+                                       asp-route-requestId="@item.Id">Amend</a>
+                                    @if (item.Comments.Count > 0)
+                                    {
+                                        <a class="btn btn-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#historic" aria-expanded="true" aria-controls="historic">
+                Historic Requests <span class="badge badge-pill badge-light" id="historicTableCount">@Model.HistoricRequests.Count</span>
+            </button>
+            <div class="collapse" id="historic">
+                <h4> Historic Requests</h4>
+                <table class="table" id="historicTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                3 Letter Code
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Reason Code
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.HistoricRequests)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThreeLetterCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OffRosterCode)
+                                </td>
+                                <td>
+                                    @if (item.Comments.Count > 0)
+                                    {
+                                        <a class="btn btn-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-warning btn-sm" data-toggle="collapse" href="@("#comment" + item.Id)"
+                                           role="button" aria-expanded="false" aria-controls="@("comment" + item.Id)" data-parent="#selector" .>
+                                            Comments
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        @foreach (var item in Model.AwaitingRequests)
+        {
+            <div class="collapse sticky-top" id="@("comment" + item.Id)" style="margin-left:20px" data-parent="#selector" .>
+                <h4>Comments for @item.ThreeLetterCode</h4>
+
+                @foreach (var comment in item.Comments)
+                {
+                    <partial name="_CommentCard" model="comment" />
+                }
+                <partial name="_AddComment" model="new OffRosterRequestComment{OffRosterRequestId = item.Id }" />
+            </div>
+        }
+        @foreach (var item in Model.FutureRequests)
+        {
+            <div class="collapse sticky-top" id="@("comment" + item.Id)" style="margin-left:20px" data-parent="#selector" .>
+                <h4>Comments for @item.ThreeLetterCode</h4>
+
+                @foreach (var comment in item.Comments)
+                {
+                    <partial name="_CommentCard" model="comment" />
+                }
+            </div>
+        }
+        @foreach (var item in Model.ActiveRequests)
+        {
+            <div class="collapse sticky-top" id="@("comment" + item.Id)" style="margin-left:20px" data-parent="#selector" .>
+                <h4>Comments for @item.ThreeLetterCode</h4>
+
+                @foreach (var comment in item.Comments)
+                {
+                    <partial name="_CommentCard" model="comment" />
+                }
+            </div>
+        }
+        @foreach (var item in Model.OpenEndedRequests)
+        {
+            <div class="collapse sticky-top" id="@("comment" + item.Id)" style="margin-left:20px" data-parent="#selector" .>
+                <h4>Comments for @item.ThreeLetterCode</h4>
+
+                @foreach (var comment in item.Comments)
+                {
+                    <partial name="_CommentCard" model="comment" />
+                }
+            </div>
+        }
+        @foreach (var item in Model.HistoricRequests)
+        {
+            <div class="collapse sticky-top" id="@("comment" + item.Id)" style="margin-left:20px" data-parent="#selector" .>
+                <h4>Comments for @item.ThreeLetterCode</h4>
+
+                @foreach (var comment in item.Comments)
+                {
+                    <partial name="_CommentCard" model="comment" />
+                }
+            </div>
+        }
+    </div>
+    </div>
+
+
+
+
+    <script src="~/js/CustomJavaScript.js"></script>
+
+

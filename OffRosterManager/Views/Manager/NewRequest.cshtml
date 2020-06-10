@@ -1,0 +1,54 @@
+﻿@model OffRosterRequest
+
+<form asp-action="ConfirmRequest"  method ="post" class="form-horizontal" role="form">
+    <h2>Submit new off roster request.</h2>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+    <div class="form-group">
+        <label asp-for="ThreeLetterCode" class="col-md-5 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="ThreeLetterCode" class="form-control" />
+            <span asp-validation-for="ThreeLetterCode" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OffRosterCode" class="col-md-5 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="OffRosterCode" class="form-control" />
+            <span asp-validation-for="OffRosterCode" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartDate" class="col-md-5 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="StartDate" class="form-control" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsOpenEnded" class="col-md-5 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="IsOpenEnded" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EndDate" class="col-md-5 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="EndDate" class="form-control" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Submit" />
+        </div>
+    </div>
+
+</form>

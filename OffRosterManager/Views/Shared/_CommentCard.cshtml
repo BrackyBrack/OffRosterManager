@@ -1,0 +1,10 @@
+﻿@model OffRosterRequestComment
+
+    <div class="card" style="margin-bottom:5px">
+        <div class="card-header">
+            @Model.CommentedBy <b>&commat; </b>@Model.CommentedAt
+        </div>
+        <div class="card-body">
+            <p class="card-text">@Model.Comment</p>
+        </div>
+    </div>

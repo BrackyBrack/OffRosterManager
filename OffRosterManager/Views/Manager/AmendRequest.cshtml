@@ -1,0 +1,91 @@
+﻿@model OffRosterRequest
+
+@{
+    ViewData["Title"] = "AmendRequest";
+}
+
+<h2>Amend Request for @Model.ThreeLetterCode</h2>
+
+<div class="row">
+    <form asp-action="ConfirmAmendRequest" asp- method="post" class="form-horizontal" role="form">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group" hidden>
+            <label asp-for="Id" class="col-md-5 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="OffRosterCode" class="col-md-5 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="OffRosterCode" class="form-control" value="@Model.OffRosterCode" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StartDate" class="col-md-5 control-label"></label>
+            <div class="col-md-5">
+                @if (Model.IsActive)
+                {
+                    <input asp-for="StartDate" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" disabled />
+                }
+                else
+                {
+                    <input asp-for="StartDate" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                }
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="IsOpenEnded" class="col-md-5 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="IsOpenEnded" class="form-control" value="@Model.IsOpenEnded" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EndDate" class="col-md-4 control-label"></label>
+            <div class="col-md-5">
+                @if (Model.IsOpenEnded)
+                {
+                    <input asp-for="EndDate" class="form-control" value="@Model.EndDate.GetValueOrDefault().ToString("yyyy-MM-dd") " />
+                }
+                else
+                {
+                    <input asp-for="EndDate" class="form-control" />
+                }
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <input type="submit" class="btn btn-primary" value="Submit" />
+            </div>
+        </div>
+
+    </form>
+    <div>
+        @if (Model.Comments != null)
+        {
+            foreach (var item in Model.Comments)
+            {
+                <partial name="_CommentCard" model="item"/>
+            }
+        }
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="ViewAllRequests">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

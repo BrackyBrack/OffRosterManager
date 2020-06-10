@@ -1,0 +1,11 @@
+﻿@model List<OffRosterRequest>
+
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Crewing" asp-action="RequestsToAction">
+            Action Request
+            @if (Model.Count > 0)
+            {
+                <span class="badge badge-pill badge-danger">@Model.Count</span>
+            }
+        </a>
+    </li>
